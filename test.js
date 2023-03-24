@@ -43,9 +43,13 @@ function getWorksData() {
             
 
             if (withButtons) {
-                console.log(tok);
-                const btnWork = document.createElement("div");
-                btnWork.innerText = "X";
+                //console.log(tok);
+                nameWork.innerText = "éditer";
+                const btnWork = document.createElement("button")
+                const iconWork = document.createElement("i");
+                iconWork.classList.add("fa-solid");
+                iconWork.classList.add("fa-trash-can");
+                btnWork.classList.add("modal-delete-btn");
                 btnWork.addEventListener("click", function(e){
                     e.preventDefault();
                     fetch('http://localhost:5678/api/works/' + workData.id, { 
@@ -57,6 +61,7 @@ function getWorksData() {
                     
                 })
                 workElement.appendChild(btnWork);
+                btnWork.appendChild(iconWork);
             }
 
             workElements.push(workElement);
@@ -80,8 +85,8 @@ function getWorksData() {
 
 // génération de l'en tete de mode éditeur si le token est ok
 const tok = window.localStorage.getItem("token");
-
-if (tok != "") {
+//console.log(tok);
+if (tok != null) {
     const workElement = document.createElement("ul");
     const editorMode = document.createElement("li");
     const publishChanges = document.createElement("li");
@@ -117,7 +122,7 @@ const openModal = function (e) {
     target.removeAttribute('aria-hidden')
     target.setAttribute('aria-modal', 'true')
     modal = target
-    console.log(target);
+    //console.log(target);
     modal.addEventListener('click', closeModal)
     modal.querySelector('.js-close-modal').addEventListener('click', closeModal)
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
@@ -141,4 +146,57 @@ document.querySelectorAll('.js-modal').forEach(a => {
 
 const stopPropagation = function (e) {
     e.stopPropagation()
+}
+
+document.querySelector('.modalAddPicture').addEventListener('click', generateModalAddPicture)
+
+function generateModalAddPicture() {
+    document.querySelector('.modalTitle').style.display = "none";
+    document.querySelector('.modal-content').style.display = "none";
+    document.querySelector('.modalStyleLine').style.display = "none";
+    document.querySelector('.modalDeletePicture').style.display = "none";
+    document.querySelector('.modalAddPicture').style.display = "none";
+    document.querySelector('.modalStyleLine').style.display = "none";
+    
+    const addPict = document.createElement("article");
+    const titleAddPict = document.createElement("p");
+    const titleInputAddPict = document.createElement("p");
+    const inputAddPict = document.createElement("input");
+    const tittleCatAddPict = document.createElement("p");
+    const inputCategory = document.createElement("input");
+    const arrowIcon = document.createElement("i");
+    const addPictIcon = document.createElement("i");
+
+    arrowIcon.classList.add("fa-solid");
+    arrowIcon.classList.add("fa-arrow-left");
+
+    addPictIcon.classList.add("fa-sharp");
+    addPictIcon.classList.add("fa-regular");
+    addPictIcon.classList.add("fa-image");
+
+    arrowIcon.addEventListener("click", function(e) {
+        e.preventDefault();
+        addPict.style.display = "none";
+        document.querySelector('.modalTitle').style.display = "flex";
+        document.querySelector('.modal-content').style.display = "grid";
+        document.querySelector('.modalStyleLine').style.display = "flex";
+        document.querySelector('.modalDeletePicture').style.display = "flex";
+        document.querySelector('.modalAddPicture').style.display = "flex";
+        document.querySelector('.modalStyleLine').style.display = "flex";
+    })
+
+    titleAddPict.innerText = "Ajout Photo";
+    titleInputAddPict.innerText = "Titre";
+    tittleCatAddPict.innerText = "catégorie";
+
+    addPict.appendChild(arrowIcon);
+    addPict.appendChild(titleAddPict);
+    addPict.appendChild(addPictIcon);
+    addPict.appendChild(titleInputAddPict);
+    addPict.appendChild(inputAddPict);
+    addPict.appendChild(tittleCatAddPict);
+    addPict.appendChild(inputCategory);
+    
+    document.querySelector(".modal-wrapper").appendChild(addPict);
+    
 }

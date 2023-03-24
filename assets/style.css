@@ -277,7 +277,17 @@ footer nav ul {
 	width: 90px;
 	
 }
-
+.modal-content article {
+	position: relative;
+}
+.modal-content .modal-delete-btn {
+	background-color: #000000;
+	color: white;
+	position: absolute;
+	top: 5px;
+	right: 15px;
+	border-radius: 5px;
+}
 .modalTitle {
 	display: flex;
 	align-items: center;
@@ -290,4 +300,37 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	color: red;
+}
+
+.xMark {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.addPictureStyle {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 220px;
+	height: 30px;
+	text-align: center;
+	border-radius: 60px ;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.editBtnStyle {
+	color: #000000;
+	font-size: small;
+	margin-left: 2.5%;
+	
+}
+
+.modalStyleLine {
+	background-color: grey;
+	height: 1px;
+	width: 600px;
 }

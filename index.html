@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<script src="https://kit.fontawesome.com/5d52b73754.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
@@ -31,25 +32,29 @@
 	<a href="#modal1" class="js-modal">Ouvrir la boite modale</a>
 <aside id="modal1" class="modal" aria-hidden="true" style="display: none; ">
 	<div class="modal-wrapper js-modal-stop">
-		<button class="js-close-modal">Fermer la boite modale</button>
+		<p class="js-close-modal"><i class="fa-solid fa-xmark xMark"></i></p>
 		<h1 class="modalTitle">Gallery Photo</h1>
 		<section class="modal-content"></section>
-		<button class="modalAddPicture">Ajouter une photo</button>
+		<div class="modalStyleLine"></div>
+		<button class="modalAddPicture addPictureStyle">Ajouter une photo</button>
 		<p class="modalDeletePicture">Supprimer la galerie</p>
 	</div>
 </aside>
 
 	<section id="introduction">
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+			<i class="fa-regular fa-pen-to-square"></i>
 		</article>
+		
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<h2>Mes Projets<i class="fa-regular fa-pen-to-square editBtnStyle"></i></h2>
 		<ul class="filters">
 			<li class="filtersElements sortAll">Tous</li>
 			<li data-filter="Objets" class="filtersElements sortObjects">Objets</li>
