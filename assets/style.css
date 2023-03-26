@@ -334,3 +334,55 @@ footer nav ul {
 	height: 1px;
 	width: 600px;
 }
+
+.modalAddPictTitle {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.modalAddPictSubtitle {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	margin-top: 25px;
+	margin-left: 90px;
+}
+
+.styleLine {
+	background-color: grey;
+	height: 1px;
+	width: 600px;
+	margin-top: 25px;
+}
+
+.btnAddPictModal {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: grey;
+	margin : 2em auto ;
+	width: 220px;
+	height: 30px;
+	text-align: center;
+	border-radius: 60px ;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.inputModalStyle {
+	width: 420px;
+	height: 51px;
+	margin-left: 90px;
+	margin-top: 5px;
+	background: #FFFFFF;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}

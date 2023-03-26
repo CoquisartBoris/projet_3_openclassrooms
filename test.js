@@ -163,9 +163,14 @@ function generateModalAddPicture() {
     const titleInputAddPict = document.createElement("p");
     const inputAddPict = document.createElement("input");
     const tittleCatAddPict = document.createElement("p");
-    const inputCategory = document.createElement("input");
+    const inputCategory = createCategorySelect();
     const arrowIcon = document.createElement("i");
     const addPictIcon = document.createElement("i");
+    const styleLine = document.createElement("div");
+    const btnAddPict = document.createElement("button");
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.setAttribute("accept", 'image/png, image/jpg, image/jpeg');
 
     arrowIcon.classList.add("fa-solid");
     arrowIcon.classList.add("fa-arrow-left");
@@ -173,6 +178,15 @@ function generateModalAddPicture() {
     addPictIcon.classList.add("fa-sharp");
     addPictIcon.classList.add("fa-regular");
     addPictIcon.classList.add("fa-image");
+
+    titleAddPict.classList.add("modalAddPictTitle");
+    titleInputAddPict.classList.add("modalAddPictSubtitle");
+    tittleCatAddPict.classList.add("modalAddPictSubtitle");
+    inputAddPict.classList.add("inputModalStyle");
+    inputCategory.classList.add("inputModalStyle");
+
+    styleLine.classList.add("styleLine");
+    btnAddPict.classList.add("btnAddPictModal");
 
     arrowIcon.addEventListener("click", function(e) {
         e.preventDefault();
@@ -185,18 +199,65 @@ function generateModalAddPicture() {
         document.querySelector('.modalStyleLine').style.display = "flex";
     })
 
+    btnAddPict.addEventListener("click", function() {
+        createNewWork(fileInput, inputAddPict, inputCategory);
+    })
+
     titleAddPict.innerText = "Ajout Photo";
     titleInputAddPict.innerText = "Titre";
     tittleCatAddPict.innerText = "catégorie";
+    btnAddPict.innerText = "Valider";
 
     addPict.appendChild(arrowIcon);
     addPict.appendChild(titleAddPict);
     addPict.appendChild(addPictIcon);
+    addPict.appendChild(fileInput);
     addPict.appendChild(titleInputAddPict);
     addPict.appendChild(inputAddPict);
     addPict.appendChild(tittleCatAddPict);
     addPict.appendChild(inputCategory);
+    addPict.appendChild(styleLine);
+    addPict.appendChild(btnAddPict);
+    
     
     document.querySelector(".modal-wrapper").appendChild(addPict);
     
 }
+
+function createCategorySelect() {
+    const inputCategory = document.createElement("select");
+    getCategoryData().then(data => {
+        for (let category of data) {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.innerText = category.name;
+            inputCategory.appendChild(option);
+        }
+    });
+    return inputCategory;
+}
+
+function getCategoryData() {
+    return fetch('http://localhost:5678/api/categories')
+    .then(res => {
+        if(res.ok){
+            return res.json();
+            
+        }
+    }).catch(err => {
+        console.log("ERREUR");
+        document.getElementById('title').innerHTML = "Erreur :("
+    })
+}
+
+function createNewWork(fileInput, inputTitle, inputCategory) {
+    var formData = new FormData();
+
+    formData.append("image", fileInput.files[0]);
+    formData.append("title", inputTitle.value);
+    formData.append("category", inputCategory.value);
+}
+
+/*
+    fileElement.src = URL.createObjectURL(file);
+*/
