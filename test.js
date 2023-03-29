@@ -210,6 +210,11 @@ function generateModalAddPicture() {
     btnUpload.addEventListener("click", function(e) {
         e.preventDefault();
         fileInput.click();
+        //const imagePreview = document.createElement("img");
+        //imagePreview.src = 
+        //iconBlueStyle.appendChild(imagePreview);
+        //maxFileWeight.style.display = "none";
+        fileInput.addEventListener('change', previewFile);
     })
 
     btnAddPict.addEventListener("click", function() {
@@ -287,3 +292,27 @@ function createNewWork(fileInput, inputTitle, inputCategory) {
 /*
     fileElement.src = URL.createObjectURL(file);
 */
+
+function previewFile() {
+    //console.log(this.files[0].name);
+
+    const file_extension_regex = /\.(jpg|png)$/i;
+
+    if (this.files.length === 0 || !file_extension_regex.test(this.files[0].name)) {
+        return;
+    }
+
+    const file = this.files[0];
+
+    const filereader = new FileReader();
+
+    filereader.readAsDataURL(file);
+    filereader.addEventListener('load', (e) => displayImage(e, file));
+
+}
+
+function displayImage(event, file) {
+    const imagePreview = document.createElement("img");
+    imagePreview.src = event.target.result;
+    document.querySelector('.blueStyle').appendChild(imagePreview);
+}
