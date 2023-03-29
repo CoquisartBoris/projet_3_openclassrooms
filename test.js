@@ -160,6 +160,7 @@ function generateModalAddPicture() {
     
     const addPict = document.createElement("article");
     const titleAddPict = document.createElement("p");
+    const iconBlueStyle = document.createElement("div");
     const titleInputAddPict = document.createElement("p");
     const inputAddPict = document.createElement("input");
     const tittleCatAddPict = document.createElement("p");
@@ -168,6 +169,7 @@ function generateModalAddPicture() {
     const addPictIcon = document.createElement("i");
     const styleLine = document.createElement("div");
     const btnAddPict = document.createElement("button");
+    const maxFileWeight = document.createElement("p");
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.setAttribute("accept", 'image/png, image/jpg, image/jpeg');
@@ -178,12 +180,15 @@ function generateModalAddPicture() {
     addPictIcon.classList.add("fa-sharp");
     addPictIcon.classList.add("fa-regular");
     addPictIcon.classList.add("fa-image");
+    addPictIcon.classList.add("stylePictIcon");
 
     titleAddPict.classList.add("modalAddPictTitle");
     titleInputAddPict.classList.add("modalAddPictSubtitle");
     tittleCatAddPict.classList.add("modalAddPictSubtitle");
     inputAddPict.classList.add("inputModalStyle");
     inputCategory.classList.add("inputModalStyle");
+    iconBlueStyle.classList.add("blueStyle");
+    maxFileWeight.classList.add("fileWeight");
 
     styleLine.classList.add("styleLine");
     btnAddPict.classList.add("btnAddPictModal");
@@ -207,11 +212,14 @@ function generateModalAddPicture() {
     titleInputAddPict.innerText = "Titre";
     tittleCatAddPict.innerText = "catégorie";
     btnAddPict.innerText = "Valider";
+    maxFileWeight.innerText = "jpg, png : 4mo max";
 
     addPict.appendChild(arrowIcon);
     addPict.appendChild(titleAddPict);
-    addPict.appendChild(addPictIcon);
-    addPict.appendChild(fileInput);
+    addPict.appendChild(iconBlueStyle);
+    iconBlueStyle.appendChild(addPictIcon);
+    iconBlueStyle.appendChild(fileInput);
+    iconBlueStyle.appendChild(maxFileWeight);
     addPict.appendChild(titleInputAddPict);
     addPict.appendChild(inputAddPict);
     addPict.appendChild(tittleCatAddPict);
@@ -256,6 +264,13 @@ function createNewWork(fileInput, inputTitle, inputCategory) {
     formData.append("image", fileInput.files[0]);
     formData.append("title", inputTitle.value);
     formData.append("category", inputCategory.value);
+
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(response => console.log('success'))
 }
 
 /*
