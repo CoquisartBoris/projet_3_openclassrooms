@@ -168,11 +168,13 @@ function generateModalAddPicture() {
     const arrowIcon = document.createElement("i");
     const addPictIcon = document.createElement("i");
     const styleLine = document.createElement("div");
+    const btnUpload = document.createElement("p");
     const btnAddPict = document.createElement("button");
     const maxFileWeight = document.createElement("p");
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.setAttribute("accept", 'image/png, image/jpg, image/jpeg');
+    fileInput.style.display = "none";
 
     arrowIcon.classList.add("fa-solid");
     arrowIcon.classList.add("fa-arrow-left");
@@ -189,6 +191,7 @@ function generateModalAddPicture() {
     inputCategory.classList.add("inputModalStyle");
     iconBlueStyle.classList.add("blueStyle");
     maxFileWeight.classList.add("fileWeight");
+    btnUpload.classList.add("btnUploadStyle")
 
     styleLine.classList.add("styleLine");
     btnAddPict.classList.add("btnAddPictModal");
@@ -204,6 +207,11 @@ function generateModalAddPicture() {
         document.querySelector('.modalStyleLine').style.display = "flex";
     })
 
+    btnUpload.addEventListener("click", function(e) {
+        e.preventDefault();
+        fileInput.click();
+    })
+
     btnAddPict.addEventListener("click", function() {
         createNewWork(fileInput, inputAddPict, inputCategory);
     })
@@ -212,6 +220,7 @@ function generateModalAddPicture() {
     titleInputAddPict.innerText = "Titre";
     tittleCatAddPict.innerText = "catégorie";
     btnAddPict.innerText = "Valider";
+    btnUpload.innerText = "+ Ajouter photo";
     maxFileWeight.innerText = "jpg, png : 4mo max";
 
     addPict.appendChild(arrowIcon);
@@ -219,6 +228,7 @@ function generateModalAddPicture() {
     addPict.appendChild(iconBlueStyle);
     iconBlueStyle.appendChild(addPictIcon);
     iconBlueStyle.appendChild(fileInput);
+    iconBlueStyle.appendChild(btnUpload);
     iconBlueStyle.appendChild(maxFileWeight);
     addPict.appendChild(titleInputAddPict);
     addPict.appendChild(inputAddPict);
@@ -261,16 +271,17 @@ function getCategoryData() {
 function createNewWork(fileInput, inputTitle, inputCategory) {
     var formData = new FormData();
 
+    formData.append("id", 0);
     formData.append("image", fileInput.files[0]);
     formData.append("title", inputTitle.value);
     formData.append("category", inputCategory.value);
+    formData.append("userId", 0);
 
     fetch('http://localhost:5678/api/works', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(response => console.log('success'))
+    .then(console.log('success'))
 }
 
 /*
