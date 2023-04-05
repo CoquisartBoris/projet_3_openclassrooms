@@ -83,10 +83,18 @@ function getWorksData() {
     });
 }
 
+document.querySelector('.fa-pen-to-square').style.display = "none";
+document.querySelector('.editBtnStyle').style.display = "none";
+
+
 // génération de l'en tete de mode éditeur si le token est ok
 const tok = window.localStorage.getItem("token");
 //console.log(tok);
 if (tok != null) {
+
+    document.querySelector('.fa-pen-to-square').style.display = "flex";
+    document.querySelector('.editBtnStyle').style.display = "inline";
+
     const workElement = document.createElement("ul");
     const editorMode = document.createElement("li");
     const publishChanges = document.createElement("li");
@@ -210,10 +218,6 @@ function generateModalAddPicture() {
     btnUpload.addEventListener("click", function(e) {
         e.preventDefault();
         fileInput.click();
-        //const imagePreview = document.createElement("img");
-        //imagePreview.src = 
-        //iconBlueStyle.appendChild(imagePreview);
-        //maxFileWeight.style.display = "none";
         fileInput.addEventListener('change', previewFile);
     })
 
@@ -276,14 +280,15 @@ function getCategoryData() {
 function createNewWork(fileInput, inputTitle, inputCategory) {
     var formData = new FormData();
 
-    formData.append("id", 0);
     formData.append("image", fileInput.files[0]);
     formData.append("title", inputTitle.value);
     formData.append("category", inputCategory.value);
-    formData.append("userId", 0);
 
     fetch('http://localhost:5678/api/works', {
         method: 'POST',
+        headers: {
+            Authorization: "Bearer " + tok
+        },
         body: formData
     })
     .then(console.log('success'))
@@ -294,7 +299,7 @@ function createNewWork(fileInput, inputTitle, inputCategory) {
 */
 
 function previewFile() {
-    //console.log(this.files[0].name);
+    console.log(typeof this);
 
     const file_extension_regex = /\.(jpg|png)$/i;
 
@@ -315,4 +320,5 @@ function displayImage(event, file) {
     const imagePreview = document.createElement("img");
     imagePreview.src = event.target.result;
     document.querySelector('.blueStyle').appendChild(imagePreview);
+
 }
