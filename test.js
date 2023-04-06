@@ -317,7 +317,14 @@ function previewFile() {
 }
 
 function displayImage(event, file) {
+
+    document.querySelector('.fileWeight').style.display = "none";
+    document.querySelector('.btnUploadStyle').style.display = "none";
+    document.querySelector('.stylePictIcon').style.display = "none";
+
     const imagePreview = document.createElement("img");
+    imagePreview.classList.add("testImageE");
+    
     imagePreview.src = event.target.result;
     document.querySelector('.blueStyle').appendChild(imagePreview);
 
