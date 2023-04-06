@@ -322,11 +322,11 @@ footer nav ul {
 	align-items: center;
 }
 
-.editBtnStyle {
+.js-modal {
 	color: #000000;
 	font-size: small;
-	margin-left: 2.5%;
-	
+	border: none;
+	background: none;
 }
 
 .modalStyleLine {
@@ -388,6 +388,8 @@ footer nav ul {
 }
 
 .blueStyle {
+	display: flex;
+	flex-direction: column;
 	margin-left: 90px;
 	margin-top: 25px;
 	width: 420px;
@@ -426,8 +428,16 @@ footer nav ul {
 	border-radius: 50px;
 }
 
-.testImageE {
-	margin-left: 130px;
-	width: 150px;
-	height: 200px;
+.imagePreviewStyle {
+	margin: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+li.editorModeStyle {
+	
+}
+
+.editorMode {
+	display: none;
 }

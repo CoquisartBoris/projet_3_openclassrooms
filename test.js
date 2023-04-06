@@ -91,7 +91,6 @@ document.querySelector('.editBtnStyle').style.display = "none";
 const tok = window.localStorage.getItem("token");
 //console.log(tok);
 if (tok != null) {
-
     document.querySelector('.fa-pen-to-square').style.display = "flex";
     document.querySelector('.editBtnStyle').style.display = "inline";
 
@@ -99,32 +98,28 @@ if (tok != null) {
     const editorMode = document.createElement("li");
     const publishChanges = document.createElement("li");
 
+    editorMode.classList.add(".editorModeStyle");
+    publishChanges.classList.add(".publishChangesStyle");
+
     editorMode.innerText = "mode édition";
     publishChanges.innerText = "publier les changements";
-    /*
-    publishChanges.addEventListener('click', function (e) {
-        e.preventDefault()
-        const target = document.querySelector(".modal")
-        target.style.display = null;
-        modal = target
-        modal.addEventListener('click', closeModal)
-        modal.querySelector('js-close-modal').addEventListener('click', closeModal)
-        modal.querySelector('js-modal-stop').addEventListener('click', stopPropagation)
-        
-    })
-*/
+    
     workElement.appendChild(editorMode);
     workElement.appendChild(publishChanges);
 
-    document.querySelector(".editorMode").appendChild(workElement);
+    const displayEditorMode = document.querySelector(".editorMode");
+    displayEditorMode.appendChild(workElement);
+
+    displayEditorMode.style.display = "flex";
 }
 
 let modal = null;
 
 const openModal = function (e) {
+    console.log(e.target);
     e.preventDefault()
     displayWorks(".modal-content");
-    const target = document.querySelector(e.target.getAttribute('href'))
+    const target = document.querySelector(e.currentTarget.dataset.modal)
     //const target = document.querySelector(e.target.getAttribute('href'))
     target.style.display = null;
     target.removeAttribute('aria-hidden')
@@ -150,6 +145,7 @@ const closeModal = function (e) {
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal)
+    console.log("testmodal");
 })
 
 const stopPropagation = function (e) {
@@ -203,6 +199,9 @@ function generateModalAddPicture() {
 
     styleLine.classList.add("styleLine");
     btnAddPict.classList.add("btnAddPictModal");
+    btnAddPict.disabled = "disabled";
+
+   
 
     arrowIcon.addEventListener("click", function(e) {
         e.preventDefault();
@@ -221,8 +220,22 @@ function generateModalAddPicture() {
         fileInput.addEventListener('change', previewFile);
     })
 
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files[0] != null && inputAddPict.value != "") {
+            btnAddPict.disabled = null;
+        }
+    })
+
+    inputAddPict.addEventListener("input", function () {
+        if (fileInput.files[0] != null && inputAddPict.value != "") {
+            btnAddPict.disabled = null;
+        }
+    })
+
     btnAddPict.addEventListener("click", function() {
-        createNewWork(fileInput, inputAddPict, inputCategory);
+        if (fileInput.files[0] != null && inputAddPict.value != "") {
+            createNewWork(fileInput, inputAddPict, inputCategory);
+        }
     })
 
     titleAddPict.innerText = "Ajout Photo";
@@ -323,7 +336,7 @@ function displayImage(event, file) {
     document.querySelector('.stylePictIcon').style.display = "none";
 
     const imagePreview = document.createElement("img");
-    imagePreview.classList.add("testImageE");
+    imagePreview.classList.add("imagePreviewStyle");
     
     imagePreview.src = event.target.result;
     document.querySelector('.blueStyle').appendChild(imagePreview);
