@@ -434,10 +434,19 @@ footer nav ul {
 	max-height: 100%;
 }
 
-li.editorModeStyle {
+li .editorModeStyle {
 	
 }
 
 .editorMode {
 	display: none;
+}
+
+li a:hover {
+	color:#B1663C
+}
+
+li a {
+	color: #000000;
+	text-decoration: none;
 }
