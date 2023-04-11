@@ -10,6 +10,14 @@ function displayWorks(containerSelector, filter) {
 });
 }
 
+function deleteWork(workId){
+    return fetch('http://localhost:5678/api/works/' + workId, { 
+        method: 'DELETE',
+        headers: {authorization: "Bearer " + tok}
+    })
+    
+}
+
 function getWorksData() {
     return fetch('http://localhost:5678/api/works')
     .then(res => {
@@ -43,7 +51,6 @@ function getWorksData() {
             
 
             if (withButtons) {
-                //console.log(tok);
                 nameWork.innerText = "éditer";
                 const btnWork = document.createElement("button")
                 const iconWork = document.createElement("i");
@@ -52,13 +59,10 @@ function getWorksData() {
                 btnWork.classList.add("modal-delete-btn");
                 btnWork.addEventListener("click", function(e){
                     e.preventDefault();
-                    fetch('http://localhost:5678/api/works/' + workData.id, { 
-                        method: 'DELETE',
-                        headers: {authorization: "Bearer " + tok}
-                    }).then(function test(){
+                    deleteWork(workData.id)
+                    .then(function (){
                         workElement.remove();
                     })
-                    
                 })
                 workElement.appendChild(btnWork);
                 btnWork.appendChild(iconWork);
@@ -89,7 +93,7 @@ document.querySelector('.editBtnStyle').style.display = "none";
 
 // génération de l'en tete de mode éditeur si le token est ok
 const tok = window.localStorage.getItem("token");
-//console.log(tok);
+
 if (tok != null) {
     document.querySelector('.fa-pen-to-square').style.display = "flex";
     document.querySelector('.editBtnStyle').style.display = "inline";
@@ -98,8 +102,8 @@ if (tok != null) {
     const editorMode = document.createElement("li");
     const publishChanges = document.createElement("li");
 
-    editorMode.classList.add(".editorModeStyle");
-    publishChanges.classList.add(".publishChangesStyle");
+    editorMode.classList.add("editorModeStyle");
+    publishChanges.classList.add("editorModeStyle");
 
     editorMode.innerText = "mode édition";
     publishChanges.innerText = "publier les changements";
@@ -116,16 +120,13 @@ if (tok != null) {
 let modal = null;
 
 const openModal = function (e) {
-    console.log(e.target);
     e.preventDefault()
     displayWorks(".modal-content");
     const target = document.querySelector(e.currentTarget.dataset.modal)
-    //const target = document.querySelector(e.target.getAttribute('href'))
     target.style.display = null;
     target.removeAttribute('aria-hidden')
     target.setAttribute('aria-modal', 'true')
     modal = target
-    //console.log(target);
     modal.addEventListener('click', closeModal)
     modal.querySelector('.js-close-modal').addEventListener('click', closeModal)
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
@@ -201,8 +202,6 @@ function generateModalAddPicture() {
     btnAddPict.classList.add("btnAddPictModal");
     btnAddPict.disabled = "disabled";
 
-   
-
     arrowIcon.addEventListener("click", function(e) {
         e.preventDefault();
         addPict.style.display = "none";
@@ -221,15 +220,11 @@ function generateModalAddPicture() {
     })
 
     fileInput.addEventListener("change", function () {
-        if (fileInput.files[0] != null && inputAddPict.value != "") {
-            btnAddPict.disabled = null;
-        }
+        toggleUploadButton(fileInput, inputAddPict, btnAddPict);
     })
 
     inputAddPict.addEventListener("input", function () {
-        if (fileInput.files[0] != null && inputAddPict.value != "") {
-            btnAddPict.disabled = null;
-        }
+        toggleUploadButton(fileInput, inputAddPict, btnAddPict);
     })
 
     btnAddPict.addEventListener("click", function() {
@@ -261,7 +256,16 @@ function generateModalAddPicture() {
     
     
     document.querySelector(".modal-wrapper").appendChild(addPict);
-    
+}
+
+function toggleUploadButton(fileInput, inputAddPict, btnAddPict){
+    if (fileInput.files[0] != null && inputAddPict.value != "") {
+        btnAddPict.disabled = null;
+        btnAddPict.classList.add("btnAddPictModalActive");
+    }else {
+        btnAddPict.classList.remove("btnAddPictModalActive");
+        btnAddPict.disabled = "disabled";
+    }
 }
 
 function createCategorySelect() {
@@ -306,10 +310,6 @@ function createNewWork(fileInput, inputTitle, inputCategory) {
     })
     .then(console.log('success'))
 }
-
-/*
-    fileElement.src = URL.createObjectURL(file);
-*/
 
 function previewFile() {
     console.log(typeof this);

@@ -376,6 +376,10 @@ footer nav ul {
 	align-items: center;
 }
 
+.btnAddPictModalActive {
+	background-color: #1D6154;
+}
+
 .inputModalStyle {
 	width: 420px;
 	height: 51px;
@@ -434,8 +438,9 @@ footer nav ul {
 	max-height: 100%;
 }
 
-li .editorModeStyle {
-	
+li.editorModeStyle:hover {
+	color: white;
+	cursor: pointer;
 }
 
 .editorMode {
